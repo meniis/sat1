@@ -1,6 +1,6 @@
 // Tiny GPS by Mike Hart
-//Modified by Brendan Fellows & Kin Bou
-// Stratos Afterlife 2012
+//Modified by Brendan Fellows & Kin Bou 2012
+
 
 #include <TinyGPS.h>
 #include <Wire.h>
@@ -71,7 +71,7 @@ void setup()
   rtty_txstring("Stratos Afterlife, ");
   rtty_txstring("by Brendan Fellows.\n");
   Serial.print("Testing TinyGPS library v. "); Serial.println(TinyGPS::library_version());
-  Serial.println("Stratos Afterlife Version");
+  Serial.println("SAT1 Version");
   Serial.println("Modified by Brendan Fellows");
   Serial.println("Original Program by Mikal Hart");
   Serial.println();
@@ -178,7 +178,7 @@ static void gpsdump(TinyGPS &gps)
     dtostrf(falt, 7, 4, temp_falt);
     sprintf(DATASTRING, " Alt: %s m \n", temp_falt);
     rtty_txstring(DATASTRING);
-    sprintf(DATASTRING, "$$StratosAfterlife,%02u:%02u:%02d,%s,%s,%u,%u,%u*FFFF\n", record1.hour, record1.minute, record1.second, temp_flat, temp_flon, record1.altitude, record1.velocity, record1.sats);
+    sprintf(DATASTRING, "$$SAT1,%02u:%02u:%02d,%s,%s,%u,%u,%u*FFFF\n", record1.hour, record1.minute, record1.second, temp_flat, temp_flon, record1.altitude, record1.velocity, record1.sats);
     rtty_txstring(DATASTRING);
 }
     
