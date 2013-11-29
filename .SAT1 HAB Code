@@ -1,6 +1,5 @@
 // Tiny GPS by Mike Hart
-//Modified by Brendan Fellows & Kin Bou 2012
-
+//Modified by Brendan Fellows & Kin Bou
 
 #include <TinyGPS.h>
 #include <Wire.h>
@@ -71,7 +70,6 @@ void setup()
   rtty_txstring("Stratos Afterlife, ");
   rtty_txstring("by Brendan Fellows.\n");
   Serial.print("Testing TinyGPS library v. "); Serial.println(TinyGPS::library_version());
-  Serial.println("SAT1 Version");
   Serial.println("Modified by Brendan Fellows");
   Serial.println("Original Program by Mikal Hart");
   Serial.println();
@@ -171,14 +169,16 @@ static void gpsdump(TinyGPS &gps)
   print_int(failed, 0xFFFFFFFF, 9);
   Serial.println();
   
+  record1.sequence_no++;
+  
     sprintf(DATASTRING, "Time running: %d sec", comp_time);
     rtty_txstring(DATASTRING);
-    dtostrf(flat, 5, 4, temp_flat);
-    dtostrf(flon, 5, 4, temp_flon);
+    dtostrf(flat, 3, 4, temp_flat);
+    dtostrf(flon, 3, 4, temp_flon);
     dtostrf(falt, 7, 4, temp_falt);
     sprintf(DATASTRING, " Alt: %s m \n", temp_falt);
     rtty_txstring(DATASTRING);
-    sprintf(DATASTRING, "$$SAT1,%02u:%02u:%02d,%s,%s,%u,%u,%u*FFFF\n", record1.hour, record1.minute, record1.second, temp_flat, temp_flon, record1.altitude, record1.velocity, record1.sats);
+    sprintf(DATASTRING, "$$SAT1,%u,%02u:%02u:%02d,%s,%s,%u,%u,%u*\n" , record1.sequence_no, record1.hour, record1.minute, record1.second, temp_flat, temp_flon, record1.altitude, record1.velocity, record1.sats);
     rtty_txstring(DATASTRING);
 }
     
@@ -378,8 +378,8 @@ void getGPS() {
 }
 void genSentence() {
   if(record1.sats != 0){
-    dtostrf(record1.latitude, 5, 4, latString);
-    dtostrf(record1.longitude, 5, 4, longString);
+    dtostrf(record1.latitude, 11, 5, latString);
+    dtostrf(record1.longitude, 11, 5, longString);
   }
   
   }
